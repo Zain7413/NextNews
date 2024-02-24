@@ -1,0 +1,12 @@
+﻿.navbar {
+    position: relative;
+}
+
+.dropdown {
+    position: unset;
+}
+
+.dropdown-menu {
+    left: 0;
+    width: 100%;
+}

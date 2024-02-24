@@ -1,0 +1,29 @@
+﻿@model IEnumerable<NextNews.Models.Database.Article>
+
+<h2>Editor's Choice</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Headline</th>
+            <th>Content Summary</th>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Editor's Choice</th>
+            <th>Checkbox</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var article in Model)
+        {
+            <tr>
+                <td>@article.HeadLine</td>
+                <td>@article.ContentSummary</td>
+                <td>@article.DateStamp</td>
+                <td>@article.Category</td>
+                <td>@article.IsEditorsChoice</td>
+                <td><input type="checkbox" /></td>
+            </tr>
+        }
+    </tbody>
+</table>

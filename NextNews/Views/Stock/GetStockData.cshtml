@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewData["Title"] = "GetStockData";
+}
+<h1 style="margin:10px; text-align:center;">Market Picture</h1>
+
+<div id="allstockChartsContainer"></div> <!-- Container for the single chart -->
+
+<script>
+    function fetchAndDrawStockGraph() {
+        fetch('stock/getstockdata') // Adjust this URL to match your controller's route
+            .then(response => response.json())
+            .then(data => {
+                // Group data by company name
+                const groupedByCompany = data.reduce((acc, item) => {
+                    acc[item.name] = acc[item.name] || [];
+                    acc[item.name].push(item);
+                    return acc;
+                }, {});
+
+                // Clear existing content and prepare for the new chart
+                const stockChartsContainer = document.getElementById('allstockChartsContainer');
+                stockChartsContainer.innerHTML = ''; // Clear existing charts
+
+                // Create a single canvas for the new chart
+                const canvas = document.createElement('canvas');
+                canvas.id = 'stockChart';
+                canvas.width = 800;
+                canvas.height = 400;
+                stockChartsContainer.appendChild(canvas);
+
+                const ctx = canvas.getContext('2d');
+
+                // Prepare datasets, one for each company
+                const datasets = Object.keys(groupedByCompany).map((companyName, index) => ({
+                    label: `${companyName} Stock Price`,
+                    data: groupedByCompany[companyName].map(item => ({
+                        x: new Date(item.date).toISOString().split('T')[0], // Ensure the date format is uniform
+                        y: item.price // Use the price as the y value
+                    })),
+                    borderColor: `hsl(${index * 36}, 100%, 50%)`, // Simple way to generate distinct colors
+                    backgroundColor: `hsla(${index * 36}, 100%, 50%, 0.2)`,
+                    fill: false, // This will make the chart a line chart without filling the area under the line
+                }));
+
+                // Adjust the labels generation to ensure it matches the dates used in datasets
+                const labels = [...new Set(data.map(item => new Date(item.date).toISOString().split('T')[0]))] // Remove duplicates and ensure uniform format
+                    .sort((a, b) => new Date(a) - new Date(b)); // Sort dates in ascending order
+
+                // Create a single chart with all companies
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels, // Use the processed dates as labels
+                        datasets: datasets
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                type: 'time',
+                                time: {
+                                    parser: 'yyyy-MM-dd', // Adjusted to match the ISO string format
+                                    tooltipFormat: 'll',
+                                    unit: 'day'
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Date'
+                                }
+                            }],
+                            yAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Price'
+                                }
+                            }]
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching stock data:', error));
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchAndDrawStockGraph);
+</script>
+
+
+
+<h1 style="margin:20px; text-align:left; text-decoration:underline; ">List of Markets</h1>
+<div id="stockChartsContainer"></div> <!-- Container for all charts -->
+
+<script>
+
+    function fetchAndDrawStockGraph() {
+        fetch('stock/getstockdata') // Adjust this URL to match your controller's route
+            .then(response => response.json())
+            .then(data => {
+                // Group data by company name
+                const groupedByCompany = data.reduce((acc, item) => {
+                    acc[item.name] = acc[item.name] || [];
+                    acc[item.name].push(item);
+                    return acc;
+                }, {});
+
+                const stockChartsContainer = document.getElementById('stockChartsContainer');
+                stockChartsContainer.innerHTML = ''; // Clear existing charts
+
+                // Create a chart for each company
+                Object.keys(groupedByCompany).forEach((companyName, index) => {
+                    const canvas = document.createElement('canvas');
+                    canvas.id = `stockChart-${index}`;
+                    canvas.width = 800;
+                    canvas.height = 400;
+                    canvas.style.marginBottom = '70px';
+                    stockChartsContainer.appendChild(canvas);
+
+                    const ctx = canvas.getContext('2d');
+                    // Generate a distinct HSL color for each chart
+                    const hslColor = `hsl(${index * 36}, 100%, 50%)`;
+
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: groupedByCompany[companyName].map(item => new Date(item.date).toLocaleDateString()),
+                            datasets: [{
+                                label: `${companyName} Stock Price`,
+                                data: groupedByCompany[companyName].map(item => item.price),
+                                borderColor: hslColor,
+                                backgroundColor: `hsla(${index * 36}, 100%, 50%, 0.2)`,
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    type: 'time',
+                                    time: {
+                                        parser: 'YYYY-MM-DD',
+                                        tooltipFormat: 'll',
+                                    },
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Date'
+                                    }
+                                }],
+                                yAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Price'
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                });
+            })
+            .catch(error => console.error('Error fetching stock data:', error));
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchAndDrawStockGraph);
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

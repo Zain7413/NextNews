@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewData["Title"] = "Choose Your Subscription Plan";
+ 
+}
+
+<h1 class="text-center mb-5">@ViewBag.Message</h1>
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <!-- Free Plan -->
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="\images\Subscription\143254.jpg" class="card-img-top" alt="Free Subscription Plan">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Free-$0.0</h5>
+                    <p class="text-center"><a href="/Identity/Account/Register" class="btn btn-danger btn-lg w-100">Free Registeration</a></p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">✔ Headline only</li>
+                        <li class="list-group-item">✘ Details</li>
+                        <li class="list-group-item">✘ Weather Report</li>
+                        <li class="list-group-item">✘ Business News</li>
+                        <li class="list-group-item">✘ Sports News</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Basic Plan -->
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="\images\Subscription\143254.jpg" class="card-img-top" alt="Basic Subscription Plan">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Basic-$99.99 </h5>
+                    <p class="text-center"><a asp-action="CreateUserSubscription" asp-controller="Subscription" class="btn btn-danger btn-lg w-100">Subscribe</a></p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">✔ Headline only</li>
+                        <li class="list-group-item">✔ Details</li>
+                        <li class="list-group-item">✔ Weather Report</li>
+                        <li class="list-group-item">✘ Business News</li>
+                        <li class="list-group-item">✘ Sports News</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+            
+        <!-- Premium Plan -->
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="\images\Subscription\143254.jpg" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Premium -$149.99</h5>
+                    <p class="text-center"><a asp-action="CreateUserSubscription" asp-controller="Subscription" class="btn btn-danger btn-lg w-100">Subscribe</a></p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">✔ Headline only</li>
+                        <li class="list-group-item">✔ Details</li>
+                        <li class="list-group-item">✔ Weather Report</li>
+                        <li class="list-group-item">✔ Business News</li>
+                        <li class="list-group-item">✔ Sports News</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

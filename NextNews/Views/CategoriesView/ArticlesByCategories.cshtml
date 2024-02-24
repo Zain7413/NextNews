@@ -1,0 +1,53 @@
+﻿@model IEnumerable<NextNews.Models.Database.Article>
+
+@{
+    ViewData["Title"] = @ViewBag.CategoryName;
+    var backgroundImageUrl = @ViewBag.BackgroundImageUrl;
+
+    var textcolor = "text-white";
+
+    if (/* @ViewBag.CategoryName == "Sweden" || */ @ViewBag.CategoryName == "Business")    // light background on picture
+    {
+        textcolor = "text-black";
+    }
+
+    var colortext = "text-black";
+    if (@ViewBag.CategoryName == "Sport" || /* || @ViewBag.CategoryName == "Art & Culture" */ @ViewBag.CategoryName == "Sweden" || @ViewBag.CategoryName == "World" || @ViewBag.CategoryName == "Weather" /* || @ViewBag.CategoryName == "Health" */)
+    {
+        colortext= "text-white";
+    }
+}
+
+<div style="background-image: url('@backgroundImageUrl');min-height: 1100px; box-shadow: 25px 25px 25px gray; background-color: rgba(255, 255, 255, 0.5);">
+    <h1 class="@colortext">@ViewBag.CategoryName</h1>
+<div>
+        <h2 class="@colortext">Top Story</h2>
+    <ul>
+        @if (Model.Any())
+        {
+            var article = Model.First();
+            <div style="border: 10px solid transparent; border-radius: 10px; margin: 10px; padding: 5px; background-color: rgba(51, 51, 51, 0.3);">
+                <a class="text-decoration-none @textcolor" asp-controller="Article" asp-action="Details" asp-route-id="@article.Id" style="font-size: 20px; font-weight: bold;">
+                    @article.HeadLine <img src="@article.ImageLink" alt="Article Image" style="max-width: 50%; height: auto;">
+
+                </a>
+            </div>
+        }
+    </ul>
+</div>
+
+<div>
+        <h2 class="@colortext">Other News</h2>
+<ul> 
+@foreach (var article in Model.Skip(1))
+{
+    <ul style="border: 10px solid transparent; border-radius: 10px; margin: 10px; padding: 5px; background-color: rgba(51, 51, 51, 0.3);">
+        <a class="text-decoration-none @textcolor" asp-controller="Article" asp-action="Details" asp-route-id="@article.Id" style="font-size: 20px; font-weight: bold;">
+                    @article.HeadLine <img src="@article.ImageLink" alt="Article Image" style="max-width: 25%; height: auto;">
+
+                </a>
+    </ul>  
+}
+</ul>
+</div>
+</div>

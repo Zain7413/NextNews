@@ -1,0 +1,120 @@
+﻿@model IEnumerable<NextNews.Models.Database.Article>
+
+@* <p>
+    <a asp-action="Create">Create New</a>
+</p> *@
+
+@* <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateStamp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LinkText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HeadLine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContentSummary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Views)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Likes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageLink)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuthorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateStamp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LinkText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HeadLine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContentSummary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Views)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Likes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageLink)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Id)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+ *@
+  @*  <Partial name="_ParViewArticleList" model="Model"></Partial> *@
+   
+ <div class="article-list">
+    @foreach (var article in Model)
+    {
+      
+        <div class="article-item">
+
+
+          <p><i>@Html.DisplayFor(modelItem => article.DateStamp) by @Html.DisplayFor(modelItem=> article.AuthorName)</i></p>
+
+            <p>@Html.DisplayFor(modelItem => article.ContentSummary)</p>
+                    <p>@Html.DisplayFor(modelItem => article.HeadLine)</P>
+                   <img src="@article.ImageLink"  ImageLink style="width:100%;"/>
+                 
+                    <p>@Html.DisplayFor(modelItem => article.LinkText)</p>
+                    <p>@Html.Raw(article.Content)</p>
+                    <p>@Html.DisplayFor(modelItem => article.Views)</p>
+                    <p>@Html.DisplayFor(modelItem => article.Likes)</p>
+                    <p>@Html.DisplayFor(modelItem => article.ImageLink)</p>
+                     <p>@Html.DisplayFor(modelItem => article.AuthorName)</p>
+                      <p>@Html.DisplayFor(modelItem => article.Category)</p>
+                     
+
+            <a href="@Url.Action("Details", "Articles", new { id = article.Id })">Read More</a> 
+            <a asp-controller="Article"  asp-action="Details" asp-route-id ="@article.Id">Read More</a>
+        </div>
+        
+    }
+</div>
+ 

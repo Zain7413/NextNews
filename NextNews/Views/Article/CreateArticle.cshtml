@@ -1,0 +1,111 @@
+﻿@model NextNews.Models.Database.Article
+
+@{
+    ViewData["Title"] = "CreateArticle";
+}
+
+<h1>Create Article</h1>
+
+<h4>Article</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="new-articles-form" asp-action="AddArticle" asp-controller="Article" method="post" enctype="multipart/form-data">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input type="hidden" asp-for="DateStamp" class="form-control" />
+
+
+
+            <div class="form-group mb-3">
+                <label asp-for="LinkText" class="control-label"></label>
+                <input asp-for="LinkText" class="form-control" />
+                <span asp-validation-for="LinkText" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+
+                <label asp-for="HeadLine" class="control-label"></label>
+                <input asp-for="HeadLine" class="form-control" />
+                <span asp-validation-for="HeadLine" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ContentSummary" class="control-label"></label>
+                <input asp-for="ContentSummary" class="form-control" />
+                <span asp-validation-for="ContentSummary" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                @* <input id="QuillEditor" asp-for="Content" class="control-label" type="hidden"/> *@
+                <div id="quill-editor"> </div>
+                @* <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span> *@
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Views" class="control-label"></label>
+                <input asp-for="Views" class="form-control" />
+                <span asp-validation-for="Views" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Likes" class="control-label"></label>
+                <input asp-for="Likes" class="form-control" />
+                <span asp-validation-for="Likes" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ImageLink" class="control-label"></label>
+                <input asp-for="ImageLink" class="form-control" />
+                <span asp-validation-for="ImageLink" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ImageLink2" class="control-label"></label>
+                <input asp-for="ImageLink2" class="form-control" />
+                <span asp-validation-for="ImageLink2" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="AuthorName" class="control-label"></label>
+                <input asp-for="AuthorName" class="form-control" />
+                <span asp-validation-for="AuthorName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Category" class="control-label"></label>
+                @*  <input asp-for="Category" class="form-control"/> *@
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+                <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.Categories as SelectList"></select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" type="file" class="form-control" />
+            </div>
+
+            <div class="form-group  form-check form-switch mb-3">
+                Editors Choice
+                <input type="checkbox" asp-for="IsEditorsChoice" class="form-check-input" role="switch" />
+            </div>
+
+            <div class="form-group mb-4 mt-2">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

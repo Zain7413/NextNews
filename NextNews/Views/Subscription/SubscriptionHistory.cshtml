@@ -1,0 +1,65 @@
+﻿@model List<NextNews.ViewModels.SubscriptionHistoryViewModel>
+
+@{
+    ViewData["Title"] = "Subscription History";
+    var isBasicPlan = Model.Any(m => m.SubscriptionId == 1);
+    var isPremiumPlan = Model.Any(m => m.SubscriptionId == 2);
+}
+
+<h2>Subscription History</h2>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Subscription ID</th>
+                <th>Created</th>
+                <th>Expired</th>
+                <th>Price</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subscription in Model)
+            {
+                <tr>
+                    <td>@subscription.SubscriptionId</td>
+                    <td>@subscription.Created</td>
+                    <td>@(subscription.Expired.HasValue ? subscription.Expired.Value.ToString("d") : "N/A")</td>
+                    <td>@subscription.Price</td> <!-- Assuming currency format -->
+                    <td>@(subscription.IsActive ? "Active" : "Inactive")</td>
+                </tr>
+
+            }
+          
+        </tbody>
+        
+    </table>
+    @if (Model.Any(m => m.IsActive))
+    {
+        <div>
+            <!-- Upgrade option if the user is on the basic plan -->
+            @if (isBasicPlan)
+            {
+                <a asp-action="ChangeSubscription" asp-route-newSubscriptionTypeId="2" class="btn btn-primary">Upgrade to Premium</a>
+            }
+
+            <!-- Downgrade option if the user is on the premium plan -->
+            @if (isPremiumPlan)
+            {
+                <a asp-action="ChangeSubscription" asp-route-newSubscriptionTypeId="1" class="btn btn-secondary">Downgrade to Basic</a>
+            }
+        </div>
+    }
+    else
+    {
+        <p>Your subscription is currently inactive.</p>
+    }
+}
+else
+{
+    <p>No subscription history available.</p>
+}
+
+

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<NextNews.Models.LatestNewsViewModel>
+
+<div class="container news-carousel">
+    <div class="latest-news-header">
+
+        <h2 class="latest-news-title" style="color:red; animation: flash 2s infinite; padding-top:10px; margin-bottom: 0;">BREAKING NEWS</h2>
+
+    </div>
+
+    <div id="newsCarousel" class="carousel slide carousel-dark" data-bs-ride="carousel" data-bs-interval="5000">
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators">
+            @{
+                var index = 0;
+            }
+            @foreach (var news in Model)
+            {
+                <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="@index" class="@(index == 0 ? "active" : "")" aria-current="true" aria-label="Slide @index"></button>
+                index++;
+            }
+        </div>
+
+        <!-- Carousel Inner -->
+        <div class="carousel-inner">
+            @{
+                var active = true;
+            }
+            @foreach (var news in Model)
+            {
+                <div class="carousel-item @(active ? "active" : "")">
+                    <div class="article-info-container" style="display: flex; justify-content: center;">
+                        <div style="text-align: center;">
+                         @*    <div class="article-imageLink">
+                                <img class="img-on-HomeIndex" src="@news.ImageLink" alt="Article ImageLink" style="width:50%; height:auto;">
+                            </div> *@
+                            <div class="latest-news-headline">
+                                <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link">
+                                    @news.HeadLine
+                                </a>
+                            </div>
+                            <p class="latest-news-date">Published on @news.DateStamp?.ToString("M") @news.DateStamp?.ToString("t")</p>
+                        </div>
+                    </div>
+                </div>
+                active = false;
+            }
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,122 @@
+﻿@model NextNews.ViewModels.UserVM
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+   
+    <style>
+        .hero-section {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .profile-card, .subscription-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .profile-card:hover, .subscription-item:hover {
+                transform: scale(1.03);
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            }
+
+        .subscription-timeline {
+            display: flex;
+            overflow-x: auto;
+            padding: 20px 0;
+            white-space: nowrap;
+        }
+
+        .subscription-item {
+            display: inline-block;
+            margin-right: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+            .subscription-item.active {
+                border-left: 4px solid #28a745;
+            }
+
+            .subscription-item.expired {
+                border-left: 4px solid #dc3545;
+            }
+
+        .modal-content {
+            position: relative;
+            animation-duration: 0.5s;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1>Welcome, @Model.User.FirstName!</h1>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="profile-card p-4 my-3 bg-white rounded shadow-sm" onclick="toggleProfileModal()">
+            <h2>Profile Details</h2>
+            <p><strong>Username:</strong> @Model.User.UserName</p>
+            <!-- Additional User Details -->
+        </div>
+
+        <!-- Subscription Timeline -->
+        <div class="subscription-timeline">
+            @foreach (var subscription in Model.MySubscriptions)
+            {
+                <div class="subscription-item @(subscription.IsActive ? "active" : "expired")" onclick="showSubscriptionDetails('@subscription.Id')">
+                    <h4>Subscription Id: @subscription.Id</h4>
+                    <p>Price: @subscription.Price?.ToString("C")</p>
+                    <!-- Additional Subscription Details -->
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Subscription Details Modal -->
+    <div class="modal fade" id="subscriptionModal" tabindex="-1" aria-labelledby="subscriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+ 
+    <script>
+        // Toggle Profile Details Modal
+        function toggleProfileModal() {
+            // Implementation depends on the modal library or custom code
+        }
+
+        // Show Subscription Details in a Modal
+        function showSubscriptionDetails(subscriptionId) {
+            // Dynamically load subscription details by ID and display in the modal
+            // This might involve fetching data from the server and updating the modal content
+            fetch('/Subscription/Details/' + subscriptionId)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    // Assuming the response HTML is the content of the subscription details
+                    $('#subscriptionModal .modal-content').html(html);
+                    $('#subscriptionModal').modal('show');
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+            $('#subscriptionModal').modal('show');
+        }
+    </script>
+</body>
+</html>

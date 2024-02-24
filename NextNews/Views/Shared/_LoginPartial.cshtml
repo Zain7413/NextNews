@@ -1,0 +1,87 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using NextNews.Models.Database
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" style="color:black; font-weight:bold" asp-area="Identity" asp-page="/Account/Register">
+                <i class="bi bi-person-fill"></i> Register
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark;" style="color:black; font-weight:bold" asp-area="Identity" asp-page="/Account/Login">
+                <i class="bi bi-box-arrow-in-right"></i> Login
+            </a>
+        </li>
+
+
+
+
+    }
+</ul>
+
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+
+    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown" >
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <button class="btn btn-dark dropdown-toggle ps-2 pe-2" data-bs-toggle="dropdown" aria-expanded="false">
+                    Menu
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-dark">
+
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li><a class="dropdown-item ps-2 pe-2" asp-action="MyPages" asp-controller="User"> My Pages </a></li>
+                    }
+                    <br/>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li><a class="dropdown-item ps-2 pe-2" asp-area="Identity" asp-page="/Account/Logout"> Logout </a></li>
+                    }
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+
+}
+
+
+
+
+
+
+
+
+
+@*    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+</ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav> *@

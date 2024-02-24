@@ -1,0 +1,716 @@
+﻿@model NextNews.ViewModels.HomeIndexVM
+@using NextNews.ViewComponents
+@using NextNews.Services;
+
+@inject IArticleService _articleService;
+
+@{
+    ViewData["Title"] = "Home Page";
+
+}
+
+@{
+    // Determine if the user is a basic user (role)
+    bool isBasicUser = User.Identity.IsAuthenticated && User.IsInRole("Basic");
+
+    // Hide text for not Premium subscribers
+    bool premiumSubscription = false;
+    if (ViewBag.SubscriptionTypeOfUser == "PremiumUser")
+    {
+        premiumSubscription = true;
+    }
+
+}
+
+<partial name="_CarouselPartialView" model="Model.LatestArticles"></partial>
+
+<div class="container">
+<div class="row">
+
+    @* Left Column *@
+
+    <div class="col-md-6">
+
+        <div class="article-container">
+            <a asp-action="Details" asp-controller="Article" asp-route-id="@Model.TopStoryArticle.Id">           
+                <div class="overlay">
+                    <span class="top-story-label">Top Story</span>
+                </div>
+                <img class="img-on-HomeIndex" src="@Model.TopStoryArticle.ImageLink" alt="Article Image" style="width:100%">
+                <h2>@Model.TopStoryArticle.LinkText</h2>
+                <h4>@Model.TopStoryArticle.ContentSummary</h4>
+
+                @if (!premiumSubscription)
+                {
+                <span style="color:red"><i class="fas fa-lock"></i> </span>
+                }
+
+            </a>
+            <p class="MostPopular-news-date">Published on @Model.TopStoryArticle.DateStamp?.ToString("M") @Model.TopStoryArticle.DateStamp?.ToString("t")</p>
+        </div>
+
+        <div class="form-group mb-3">
+        </div>
+
+        @{
+            int catIdSweden = _articleService.GetCategoryIdCategoryName("Sweden");
+        }
+
+            <h2 style="color: black">
+                <a asp-controller="Article" asp-action="LatestArticlesByCategory" asp-route-categoryId="@catIdSweden">Sweden</a>
+            </h2>
+
+        <div class="col-12">
+
+            @if (Model.ArticlesByCategorySweden.Any())
+            {
+                var firstArticle = Model.ArticlesByCategorySweden.First();
+
+                <a asp-action="Details" asp-controller="Article" asp-route-id="@firstArticle.Id" class="latest-news-link">
+                    <div>
+                    <img class="img-on-HomeIndex" src="@firstArticle.ImageLink" alt="Article Image" style="width:100%">
+                    </div>
+                    <div class="latest-news-headline">
+                         @* <a asp-action="Details" asp-controller="Article" asp-route-id="@firstArticle.Id" class="sports-news-link"> *@
+                        @firstArticle.HeadLine
+                          @*  </a> *@
+                    </div>
+
+                        @if (!premiumSubscription)
+                        {
+                            <span style="color:red"><i class="fas fa-lock"></i> </span>
+                        }
+                </a>
+
+                <div class="sweden-news-item mb-3">
+                </div>
+                <p class="latest-news-summary">@firstArticle.ContentSummary</p>
+                <p class="latest-news-date">Published on @firstArticle.DateStamp?.ToString("M") @firstArticle.DateStamp?.ToString("t")</p>
+            }
+
+        </div>
+
+            <div class="row">
+                @foreach (var categoryArticle in Model.ArticlesByCategorySweden.Skip(1))
+                {
+                    <div class="col-12 col-md-6 mb-3">
+                        <a asp-action="Details" asp-controller="Article" asp-route-id="@categoryArticle.Id" class="latest-news-link">
+                            <div class="article-imageLink">
+                                <img class="img-on-HomeIndex img-fluid" src="@categoryArticle.ImageLink" alt="Article ImageLink">
+                            </div>
+                            <div class="latest-news-headline">
+                                @categoryArticle.HeadLine
+                            </div>
+
+                            @if (!premiumSubscription)
+                            {
+                                <span style="color:red"><i class="fas fa-lock"></i> </span>
+                            }
+                        </a>
+                            <p class="latest-news-summary">@categoryArticle.ContentSummary</p>
+                            <p class="latest-news-date">Published on @categoryArticle.DateStamp?.ToString("M") @categoryArticle.DateStamp?.ToString("t")</p>
+                       
+                    </div>
+                }
+            </div>
+
+        <div class="form-group mb-3">
+        </div>
+
+        @{
+            int catIdLocal = _articleService.GetCategoryIdCategoryName("Local");
+        }
+
+            <h2 style="color: black"><a asp-controller="Article" asp-action="LatestArticlesByCategory" asp-route-categoryId="@catIdLocal">Local</a></h2>
+
+        <div class="col-12">
+
+            @if (Model.ArticlesByCategoryLocal.Any())
+            {
+                var firstArticle = Model.ArticlesByCategoryLocal.First();
+              
+                <a asp-action="Details" asp-controller="Article" asp-route-id="@firstArticle.Id" class="sports-news-link">
+                    <div>
+                    <img class="img-on-HomeIndex" src="@firstArticle.ImageLink" alt="Article Image" style="width:100%">
+                    </div>
+                    <div class="latest-news-headline">
+                     @*  <a asp-action="Details" asp-controller="Article" asp-route-id="@firstArticle.Id" class="sports-news-link"> *@
+                        @firstArticle.HeadLine
+                     @*  </a> *@  
+                    </div>
+
+                     @if (!premiumSubscription)
+                     {
+                      <span style="color:red"><i class="fas fa-lock"></i> </span>
+                     }
+                </a>
+                <div class="local-news-item mb-3">
+                </div>
+                <p class="latest-news-summary">@firstArticle.ContentSummary</p>
+                <p class="latest-news-date">Published on @firstArticle.DateStamp?.ToString("M") @firstArticle.DateStamp?.ToString("t")</p>
+            }
+
+        </div>
+
+            <div class="row">
+                @foreach (var categoryArticle in Model.ArticlesByCategoryLocal.Skip(1))
+                {
+                    <div class="col-12 col-md-6 mb-3">
+                        <a asp-action="Details" asp-controller="Article" asp-route-id="@categoryArticle.Id" class="latest-news-link">
+                            <div class="article-imageLink">
+                                <img class="img-on-HomeIndex img-fluid" src="@categoryArticle.ImageLink" alt="Article ImageLink">
+                            </div>
+                            <div class="latest-news-headline">
+                                @categoryArticle.HeadLine
+                            </div>
+
+                            @if (!premiumSubscription)
+                            {
+                                <span style="color:red"><i class="fas fa-lock"></i> </span>
+                            }
+                        </a>
+                        <p class="latest-news-summary">@categoryArticle.ContentSummary</p>
+                        <p class="latest-news-date">Published on @categoryArticle.DateStamp?.ToString("M") @categoryArticle.DateStamp?.ToString("t")</p>
+
+                    </div>
+                }
+            </div>
+
+        <div class="form-group mb-3">
+        </div>
+
+
+        @{
+            int catIdWorld = _articleService.GetCategoryIdCategoryName("World");
+        }
+
+            <h2 style="color: black"><a asp-controller="Article" asp-action="LatestArticlesByCategory" asp-route-categoryId="@catIdWorld">World</a></h2>
+
+        <div class="col-12">
+
+            @if (Model.ArticlesByCategoryWorld.Any())
+            {
+                var firstArticle = Model.ArticlesByCategoryWorld.First();
+                 
+                <a asp-action="Details" asp-controller="Article" asp-route-id="@firstArticle.Id" class="sports-news-link">
+                    <div>
+                    <img class="img-on-HomeIndex" src="@firstArticle.ImageLink" alt="Article Image" style="width:100%">
+                    </div>
+                    <div class="latest-news-headline">
+                     @*  <a asp-action="Details" asp-controller="Article" asp-route-id="@firstArticle.Id" class="sports-news-link"> *@
+                        @firstArticle.HeadLine
+                     @*  </a> *@
+                    </div>
+
+                        @if (!premiumSubscription)
+                        {
+                            <span style="color:red"><i class="fas fa-lock"></i> </span>
+                        }
+                </a>
+                <div class="world-news-item mb-3">
+                </div>
+                <p class="latest-news-summary">@firstArticle.ContentSummary</p>
+                <p class="latest-news-date">Published on @firstArticle.DateStamp?.ToString("M") @firstArticle.DateStamp?.ToString("t")</p>
+            }
+
+        </div>
+
+            <div class="row">
+                @foreach (var categoryArticle in Model.ArticlesByCategoryWorld.Skip(1))
+                {
+                    <div class="col-12 col-md-6 mb-3">
+                        <a asp-action="Details" asp-controller="Article" asp-route-id="@categoryArticle.Id" class="latest-news-link">
+                            <div class="article-imageLink">
+                                <img class="img-on-HomeIndex img-fluid" src="@categoryArticle.ImageLink" alt="Article ImageLink">
+                            </div>
+                            <div class="latest-news-headline">
+                                @categoryArticle.HeadLine
+                            </div>
+
+                            @if (!premiumSubscription)
+                            {
+                                <span style="color:red"><i class="fas fa-lock"></i> </span>
+                            }
+                        </a>
+                        <p class="latest-news-summary">@categoryArticle.ContentSummary</p>
+                        <p class="latest-news-date">Published on @categoryArticle.DateStamp?.ToString("M") @categoryArticle.DateStamp?.ToString("t")</p>
+
+                    </div>
+                }
+            </div>
+
+
+    </div>
+
+
+    @*  Right Column *@
+
+    <div class="col-md-6">
+
+            <div class="row">
+                <div class="col-12 col-md-6 mb-3">
+                    <h2 style="background-color: black; border-radius: 5px; text-align: center; padding: 5px">
+                        <a asp-controller="Article" asp-action="LatestMostpopularEditorschoice" asp-route-latestOrMostPopular="latest" style="color: white">Latest News</a>
+                    </h2>
+                    <div class="form-group mb-3">
+                    </div>
+                    @foreach (var news in Model.LatestArticles)
+                    {
+                        <div class="row">
+                            <div class="col">
+                                <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link">
+                                    <div class="article-imageLink">
+                                        <img class="img-on-HomeIndex" src="@news.ImageLink" alt="Article ImageLink" style="width:100%">
+                                    </div>
+                                    <div class="latest-news-headline">
+                                        @news.HeadLine
+                                    </div>
+
+                                    @if (!premiumSubscription)
+                                    {
+                                        <span style="color:red"><i class="fas fa-lock"></i> </span>
+                                    }
+                                </a>
+                               @*  <p class="latest-news-summary">@news.ContentSummary</p> *@
+                                <p class="latest-news-date">Published on @news.DateStamp?.ToString("M") @news.DateStamp?.ToString("t")</p>
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group mb-3">
+                    </div>
+                    <div style="background-color: lightgrey; padding: 5px;">
+                        <h2 style="color: black; font-size: 18px; font-weight: bold; text-align:center;">Latest Business News</h2>
+                        @foreach (var categoryArticle in Model.ArticlesByCategoryBusiness)
+                        {
+                            <div style="background-color: white; padding: 3px; margin-top: 10px;">
+                                <div class="latest-news-headline">
+                                    <a asp-action="Details" asp-controller="Article" asp-route-id="@categoryArticle.Id" class="latest-news-link" style="text-decoration: underline; font-size: 15px;">
+                                        @categoryArticle.HeadLine
+                                    </a>
+                                </div>
+                                <div class="business-news-item mb-3">
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <h2 style="background-color: black; border-radius: 5px; text-align: center; padding: 5px">
+
+                        <a asp-controller="Article" asp-action="LatestMostpopularEditorschoice" asp-route-latestOrMostPopular="mostpopular" style="color: white">Most Popular News</a>
+                    </h2>
+                    <div class="form-group mb-3">
+                    </div>
+                    <div id="articleCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            @foreach (var article in Model.MostPopularArticles)
+                            {
+                                <div class="carousel-item @(article == Model.MostPopularArticles.First() ? "active" : "")">
+                                    <a asp-action="Details" asp-controller="Article" asp-route-id="@article.Id" class="latest-news-link">
+                                        <img class="img-on-HomeIndex" src="@article.ImageLink" alt="Article Image" style="width:100%">
+                                        <p class="latest-news-headline">@article.HeadLine</p>
+                                        @if (!premiumSubscription)
+                                        {
+                                            <span style="color:red"><i class="fas fa-lock"></i> </span>
+                                        }
+                                        <p class="latest-news-date">Published on @article.DateStamp?.ToString("M") @article.DateStamp?.ToString("t")</p>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#articleCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#articleCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                    <div class="form-group mb-3">
+                    </div>
+                    <div class="form-group mb-3">
+                    </div>
+
+                    @* Advertisement column *@
+                    <div class="advertisement-column">
+                        <p>Advertisement</p>
+                        <div class="advertisement-item mb-3">
+                            <a href="https://www.lexicon.se">
+                                <img src="https://www.lexicon.se/Static/images/logo-lexicon_2x.gif" class="img-fluid" alt="Advertisement 1">
+                            </a>
+                        </div>
+                        <div class="advertisement-item mb-3">
+                            <a href="https://www.lexicon.se">
+                                <img src="https://motalajobb.se/wp-content/uploads/sites/8/2023/10/Lexicon.jpg" class="img-fluid" alt="Advertisement 2">
+                            </a>
+                        </div>
+                        <div class="advertisement-item mb-3">
+                            <a href="~/images/lexicon reklm.jpg">
+                                <img src="~/images/lexicon reklm.jpg" class="img-fluid" alt="Advertisement 3">
+                            </a>
+                        </div>
+                        <div class="advertisement-item mb-3">
+                            <a href="https://www.lexicon.se/link/6c8fbd81c2554c9190539e9e88fcf758.aspx">
+                                <img src="https://www.lexicon.se/link/6c8fbd81c2554c9190539e9e88fcf758.aspx" class="img-fluid" alt="Advertisement 4">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                    </div>
+                    <div class="form-group mb-3">
+                    </div>
+
+                           @* Advertisement column *@
+
+                           <div class="advertisement-column">
+                              <p>Advertisement</p>
+                              <div class="advertisement-item mb-3">
+                                <a href="https://www.lexicon.se">
+                                   <img src="https://www.lexicon.se/link/1c207bb2aa544a77849bab48fa52fb82.aspx" class="img-fluid" alt="Advertisement 1">
+                                </a>
+                              </div>
+                              <div class="advertisement-item mb-3">
+                                <a href="https://www.tesla.com/sv_se">
+                                   <h3>Tesla </h3><img src="https://i.pinimg.com/originals/ed/6c/f0/ed6cf0b9b48c336020037c310ac37f56.jpg" class="img-fluid" alt="Advertisement 2">
+                                </a>
+                              </div>
+                              <div class="advertisement-item mb-3">
+                                <a href="https://www.samsung.com/se">
+                                   <img src="https://webset.b-cdn.net/wp-content/uploads/2024/01/Samsung-Galaxy-S24-3.jpg" class="img-fluid" alt="Advertisement 3">
+                                </a>
+                              </div>         
+                           </div>
+
+                    <div class="form-group mb-3">
+                    </div>
+                    <div class="form-group mb-3">
+                    </div>
+
+                    @* Weather column *@
+
+                    <div class="weather-column">
+                        <div class="form-group mb-3">
+                        </div>
+
+                        <p>Weather</p>
+                        <div class="weather-item mb-3">
+
+                            @await Component.InvokeAsync(typeof(WheatherApiViewComponentAside), new { chosenCity = "Linköping" })
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        <div class="form-group mb-3">
+        </div>
+        <div class="form-group mb-3">
+        </div>
+            
+           @* Video *@
+
+            <h2 style="color: black; font-size: 24px; font-weight: bold; text-align:center;">News Video Clips</h2>
+
+            <div class="form-group mb-3">
+            </div>
+
+            <iframe width="540" height="320" src="https://www.youtube.com/embed/pux5_bdWBDU" title="Trump’s legal battles enter critical 48 hours" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+            <div class="form-group mb-3">
+            </div>
+
+    </div>
+
+        <div class="form-group mb-3">
+        </div>
+       
+
+        <h2 style="color: black"><a asp-controller="Article" asp-action="LatestMostpopularEditorschoice" asp-route-editorsChoice="editorschoice">Editor's Choice</a></h2>
+
+    <div class="row">
+        @foreach (var news in Model.EditorsChoiceArticles)
+        {
+            <div class="col-md-3 mb-3">
+
+                <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link">
+                   <div class="article-imageLink">
+                        <img class="img-on-HomeIndex" src="@news.ImageLink" alt="Article ImageLink" style="width:100%">
+                   </div>
+                   <div class="latest-news-headline">
+                        @*  <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link"> *@
+                        @news.HeadLine
+                        @* </a> *@
+                   </div>
+                        @if (!premiumSubscription)
+                        {
+                            <span style="color:red"><i class="fas fa-lock"></i> </span>
+                        }
+
+
+                </a>
+                <p class="latest-news-summary">@news.ContentSummary</p>
+                <p class="latest-news-date">Published on @news.DateStamp?.ToString("M") @news.DateStamp?.ToString("t")</p>
+            </div>
+        }
+    </div>
+
+    <div class="form-group mb-3">
+    </div>
+
+        @* @{
+            int catIdWorld = _articleService.GetCategoryIdCategoryName("World");
+        } *@
+
+        <h2 style="color: black"><a asp-controller="Article" asp-action="LatestArticlesByCategory" asp-route-categoryId="@catIdWorld">World</a></h2>
+
+        <div class="row">
+            @foreach (var news in Model.ArticlesByCategoryWorld)
+            {
+                <div class="col-md-3 mb-3">
+
+                    <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link">
+                        <div class="article-imageLink">
+                            <img class="img-on-HomeIndex" src="@news.ImageLink" alt="Article ImageLink" style="width:100%">
+                        </div>
+                        <div class="latest-news-headline">
+                            @* <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link"> *@
+                            @news.HeadLine
+                            @*  </a> *@
+                        </div>
+                    </a>
+                    <p class="latest-news-summary">@news.ContentSummary</p>
+                    <p class="latest-news-date">Published on @news.DateStamp?.ToString("M") @news.DateStamp?.ToString("t")</p>
+                </div>
+            }
+        </div>
+
+        <div class="form-group mb-3">
+        </div>
+
+    @{
+        int catIdBusiness = _articleService.GetCategoryIdCategoryName("Business");
+    }
+
+        <h2 style="color: black"><a asp-controller="Article" asp-action="LatestArticlesByCategory" asp-route-categoryId="@catIdBusiness">Business</a></h2>
+  
+    <div class="row">
+        @foreach (var news in Model.ArticlesByCategoryBusiness)
+        {
+            <div class="col-md-3 mb-3">
+
+                <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link">
+                    <div class="article-imageLink">
+                        <img class="img-on-HomeIndex" src="@news.ImageLink" alt="Article ImageLink" style="width:100%">
+                    </div>
+                    <div class="latest-news-headline">
+                        @* <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link"> *@
+                        @news.HeadLine
+                         @*  </a> *@
+                    </div>
+
+                        @if (!premiumSubscription)
+                        {
+                            <span style="color:red"><i class="fas fa-lock"></i> </span>
+                        }
+
+                </a>
+                <p class="latest-news-summary">@news.ContentSummary</p>
+                <p class="latest-news-date">Published on @news.DateStamp?.ToString("M") @news.DateStamp?.ToString("t")</p>
+            </div>
+        }
+    </div>
+
+    <div class="form-group mb-3">
+    </div>
+
+    @{
+        int catIdWeather = _articleService.GetCategoryIdCategoryName("Weather");
+    }
+
+        <h2 style="color: black"><a asp-controller="Article" asp-action="LatestArticlesByCategory" asp-route-categoryId="@catIdWeather">Weather</a></h2>
+
+    <div class="row">
+        @foreach (var news in Model.ArticlesByCategoryWeather)
+        {
+            <div class="col-md-3 mb-3">
+
+                <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link">
+                    <div class="article-imageLink">
+                        <img class="img-on-HomeIndex" src="@news.ImageLink" alt="Article ImageLink" style="width:100%">
+                    </div>
+                    <div class="latest-news-headline">
+                        @*  <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link"> *@
+                        @news.HeadLine
+                   @*  </a> *@
+                    </div>
+
+                        @if (!premiumSubscription)
+                        {
+                            <span style="color:red"><i class="fas fa-lock"></i> </span>
+                        }
+
+
+                </a>
+                <p class="latest-news-summary">@news.ContentSummary</p>
+                <p class="latest-news-date">Published on @news.DateStamp?.ToString("M") @news.DateStamp?.ToString("t")</p>
+            </div>
+        }
+    </div>
+
+    <div class="form-group mb-3">
+    </div>
+
+    @{
+        int catIdHealth = _articleService.GetCategoryIdCategoryName("Health");
+    }
+
+        <h2 style="color: black"><a asp-controller="Article" asp-action="LatestArticlesByCategory" asp-route-categoryId="@catIdHealth">Health</a></h2>
+
+    <div class="row">
+        @foreach (var news in Model.ArticlesByCategoryHealth)
+        {
+            <div class="col-md-3 mb-3">
+
+                <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link">
+                    <div class="article-imageLink">
+                        <img class="img-on-HomeIndex" src="@news.ImageLink" alt="Article ImageLink" style="width:100%">
+                    </div>
+                    <div class="latest-news-headline">
+                        @*  <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link"> *@
+                        @news.HeadLine
+                    @* </a> *@
+                    </div>
+
+                        @if (!premiumSubscription)
+                        {
+                            <span style="color:red"><i class="fas fa-lock"></i> </span>
+                        }
+
+                </a>
+                <p class="latest-news-summary">@news.ContentSummary</p>
+                <p class="latest-news-date">Published on @news.DateStamp?.ToString("M") @news.DateStamp?.ToString("t")</p>
+            </div>
+        }
+    </div>
+
+    <div class="form-group mb-3">
+    </div>
+
+    @{
+        int catIdSports = _articleService.GetCategoryIdCategoryName("Sport");
+    }
+
+        <h2 style="color: black"><a asp-controller="Article" asp-action="LatestArticlesByCategory" asp-route-categoryId="@catIdSports">Sport</a></h2>
+
+    <div class="row">
+        @foreach (var news in Model.ArticlesByCategorySport)
+        {
+            <div class="col-md-3 mb-3">
+
+                <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link">
+                    <div class="article-imageLink">
+                         <img class="img-on-HomeIndex" src="@news.ImageLink" alt="Article ImageLink" style="width:100%">
+                    </div>
+                    <div class="latest-news-headline">
+                         @*  <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link"> *@
+                        @news.HeadLine
+                        @* </a> *@
+                    </div>
+
+                        @if (!premiumSubscription)
+                        {
+                            <span style="color:red"><i class="fas fa-lock"></i> </span>
+                        }
+
+                </a>
+                <p class="latest-news-summary">@news.ContentSummary</p>
+                <p class="latest-news-date">Published on @news.DateStamp?.ToString("M") @news.DateStamp?.ToString("t")</p>
+            </div>
+        }
+    </div>
+
+    <div class="form-group mb-3">
+    </div>
+
+    @{
+        int catIdEntertainment = _articleService.GetCategoryIdCategoryName("Entertainment");
+    }
+
+        <h2 style="color: black"><a asp-controller="Article" asp-action="LatestArticlesByCategory" asp-route-categoryId="@catIdEntertainment">Entertainment</a></h2>
+
+    <div class="row">
+        @foreach (var news in Model.ArticlesByCategoryEntertainment)
+        {
+            <div class="col-md-3 mb-3">
+
+                <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link">
+                    <div class="article-imageLink">
+                        <img class="img-on-HomeIndex" src="@news.ImageLink" alt="Article ImageLink" style="width:100%">
+                    </div>
+                    <div class="latest-news-headline">
+                        @* <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link"> *@
+                        @news.HeadLine
+                        @*  </a> *@
+                    </div>
+
+                        @if (!premiumSubscription)
+                        {
+                            <span style="color:red"><i class="fas fa-lock"></i> </span>
+                        }
+
+
+                </a>
+                <p class="latest-news-summary">@news.ContentSummary</p>
+                <p class="latest-news-date">Published on @news.DateStamp?.ToString("M") @news.DateStamp?.ToString("t")</p>
+            </div>
+        }
+    </div>
+
+    <div class="form-group mb-3">
+    </div>
+
+        @{
+            int catIdArtAndCulture = _articleService.GetCategoryIdCategoryName("Art & Culture");
+        }
+
+        <h2 style="color: black"><a asp-controller="Article" asp-action="LatestArticlesByCategory" asp-route-categoryId="@catIdArtAndCulture">Art & Culture</a></h2>
+
+        <div class="row">
+            @foreach (var news in Model.ArticlesByCategoryArtAndCulture)
+            {
+                <div class="col-md-3 mb-3">
+                    <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link">
+                        <div class="article-imageLink">
+                            <img class="img-on-HomeIndex img-fluid" src="@news.ImageLink" alt="Article ImageLink">
+                        </div>
+                        <div class="latest-news-headline">
+                            @news.HeadLine
+                        </div>
+
+                        @if (!premiumSubscription)
+                        {
+                            <span style="color:red"><i class="fas fa-lock"></i> </span>
+                        }
+
+
+                    </a>
+                        <p class="latest-news-summary">@news.ContentSummary</p>
+                        <p class="latest-news-date">Published on @news.DateStamp?.ToString("M") @news.DateStamp?.ToString("t")</p>
+                   
+                </div>
+            }
+        </div>
+
+</div>
+</div>
+
+
+
+@* View Component for Editors choice *@
+
+@* @await Component.InvokeAsync("EditorsChoice") *@

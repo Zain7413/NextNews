@@ -1,0 +1,177 @@
+
+﻿@* @model NextNews.ViewModels.CategoryViewModel
+
+@{
+    ViewData["Title"] = "Search";
+
+
+}
+<h1>Search</h1>
+
+<style>
+
+    .hr-search{
+
+
+<style>
+    .hr-search
+    {
+        background-color: gray;
+        opacity: 1;
+    }
+</style> *@
+
+@* 
+<form asp-action="Search" asp-controller="Categories" method="get" class="d-flex"> *@
+@*     <input class="form-control" type="search" placeholder="Search" name="searchString" aria-label="Search">
+    <button class="btn btn-outline-success" type="submit" style="margin-left: 10px">Search</button> *@
+@* </form> *@
+
+@* <br/>
+<br/>
+
+@await Component.InvokeAsync("SearchBar", Model.Paggination) *@
+<!-- Display the list of articles -->
+
+
+@* @if (Model.Articles != null && Model.Articles.Any())
+{
+  
+    <div>
+        <h2 class="mt-3">Search Results (@Model.Articles.Count)</h2>
+            <hr class="hr-search" width="100%" size="15">
+
+        @foreach (var article in Model.Articles)
+        {
+            <div class="row mt-4">
+                <!-- Image Column -->
+                <div class="col-md-4">
+                    <img class="img-on-HomeIndex img-fluid" src="@article.ImageLink" alt="@article.HeadLine">
+                </div>
+                <!-- Summary and Date Column -->
+                <div class="col-md-8">
+                    <div class="latest-news-headline">
+                        <a asp-action="Details" asp-controller="Article" asp-route-id="@article.Id" class="latest-news-link">
+                            @article.HeadLine
+                        </a>
+                    </div>
+                    <p class="latest-news-summary">@article.ContentSummary</p>
+                    <p class="latest-news-date">Published on @article.DateStamp?.ToString("M") @article.DateStamp?.ToString("t")</p>
+                </div>
+            </div>
+
+
+            <hr class="hr-search" width="100%" size="15">
+            *@
+            @* 
+            <ul class="pagination pagination-sm">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+ *@
+
+      @*   }
+    </div>
+}
+else
+{
+    <div class="p-4">
+        <p><i><b>No articles found.</b></i></p>
+    </div>
+}
+ *@
+@* <partial name="_PaginationForSearch" model="@Model.Pager"></partial> *@
+
+
+@* @await Component.InvokeAsync("SearchBar", Model.Paggination) *@
+
+
+@* <partial name="_PagginationForSearch" model="@Model"></partial> *@
+
+@* <!-- Content of news articles -->
+<div id="news-articles">
+    <!-- News articles go here -->
+</div>
+
+<!-- Pagination -->
+ *@
+
+@* <partial name="_PagginationPartialView" model="@Model" color="goldenrod" /> *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@model NextNews.ViewModels.CategoryViewModel
+@{
+    ViewData["Title"] = "Search";
+}
+<h1>Search</h1>
+
+<style>
+    .hr-search {
+        background-color: gray;
+    }
+</style>
+
+<form asp-action="Search" asp-controller="Categories" method="get" class="d-flex">
+    <input class="form-control" type="search" placeholder="Search Articles" name="searchString" aria-label="Search Articles">
+    @*   <input class="form-control" type="search" placeholder="Search Categories" name="category" aria-label="Search Categories">
+    *@  <button class="btn btn-outline-success" type="submit" style="margin-left: 10px">Search</button>
+</form>
+
+@await Component.InvokeAsync("SearchBar", Model.Paggination)
+
+@if (Model.Articles != null && Model.Articles.Any())
+{
+    <div>
+        <h2 class="mt-3">Search Results (@Model.Articles.Count)</h2>
+        @foreach (var article in Model.Articles)
+        {
+            <div class="row mt-4">
+                <!-- Image Column -->
+                <div class="col-md-4">
+                    <img class="img-on-HomeIndex img-fluid" src="@article.ImageLink" alt="@article.HeadLine">
+                </div>
+                <!-- Summary and Date Column -->
+                <div class="col-md-8">
+                    <div class="latest-news-headline">
+                        <a asp-action="Details" asp-controller="Article" asp-route-id="@article.Id" class="latest-news-link">
+                            @article.HeadLine
+                          
+
+                        </a>
+                    </div>
+                    <p class="latest-news-summary">@article.ContentSummary</p>
+                    <p class="latest-news-date">Published on @article.DateStamp?.ToString("M") @article.DateStamp?.ToString("t")</p>
+                </div>
+            </div>
+            <hr class="hr-search" width="100%" size="3">
+        }
+    </div>
+}
+else
+{
+    <div class="p-4">
+        <p><i><b>No articles found.</b></i></p>
+    </div>
+}
+
+@await Component.InvokeAsync("SearchBar", Model.Paggination)
+
+
+

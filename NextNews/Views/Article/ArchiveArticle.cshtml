@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic News Archive</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .news-article {
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+            .news-article:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .article-content {
+            padding: 15px;
+            flex: 1; /* This line will make the content area expand */
+        }
+
+        .article-title {
+            font-size: 20px;
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .article-summary {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .article-meta {
+            margin-bottom: 15px; /* Adjust spacing for meta information */
+        }
+
+        .article-footer {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            text-align: right;
+        }
+
+        .read-more-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="news-container">
+        @foreach (var item in Model)
+        {
+            <div class="news-article">
+                <img src="@item.ImageLink" alt="@item.LinkText" class="article-image">
+                <div class="article-content">
+                    <h3 class="article-title">@item.LinkText</h3>
+                    <p class="article-summary">@item.ContentSummary</p>
+                    <div class="article-meta">Published: @item.DateStamp</div>
+                </div>
+                <div class="article-footer">
+                    <a href="@Url.Action("Details", "Article", new { id = item.Id })" class="read-more-btn">Read More</a>
+                </div>
+            </div>
+        }
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+﻿@model Dictionary<string, List<NextNews.Models.Database.Article>>
+
+
+
+@foreach (var category in Model)
+{
+    <h2>@category.Key</h2>
+    <div class="row">
+        @foreach (var article in category.Value)
+        {
+            <div class="col-6 col-md-3 mb-3">
+                <a asp-action="Details" asp-controller="Article" asp-route-id="@article.Id" class="latest-news-link">
+                    <div class="article-imageLink">
+                        <img class="img-on-HomeIndex" src="@article.ImageLink" alt="Article ImageLink">
+                    </div>
+                    <div class="latest-news-headline">
+                        @article.HeadLine
+                    </div>
+                </a>
+                <p class="latest-news-summary">@article.ContentSummary</p>
+                <p class="latest-news-date">Published on @article.DateStamp?.ToString("M") @article.DateStamp?.ToString("t")</p>
+            </div>
+        }
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

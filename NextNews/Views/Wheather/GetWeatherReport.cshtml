@@ -1,0 +1,28 @@
+﻿@model NextNews.Models.Wheather
+
+
+@{
+    ViewData["Title"] = "GetWeatherReport";
+}
+
+
+<h2>Weather Information</h2>
+<div>
+    <p>City: @Model.City</p>
+    <p>Summary: @Model.Summary</p>
+    <p>Temperature (Celsius): @Model.TemperatureCelsius</p>
+    <p>Temperature (Fahrenheit): @Model.TemperatureFahrenheit</p>
+    <p>Humidity: @Model.humidity</p>
+    <p>Wind Speed: @Model.windSpeed</p>
+    <p>Date: @Model.date</p>
+    <p>Unix Time: @Model.unixTime</p>
+</div>
+
+<div>
+
+    <p>Icon URL: @Model.icon.url</p>
+    <img src="@Model.icon.url" alt="Weather Icon" />
+    <p>Icon Code: @Model.icon.code</p>
+
+
+</div>

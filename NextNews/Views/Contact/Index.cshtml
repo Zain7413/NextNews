@@ -1,0 +1,70 @@
+﻿@model NextNews.Models.Database.ContactFormMessage
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 style="font-weight:bold; padding-top:10px;padding-bottom:5px">Contact Us</h1>
+
+<h5>
+    NEXTnews <br />
+    Street # Västra Svedengatan 10, 582 73 <br />
+    Linköping,Sweden.<br />
+    Phone <strong>+46- 013-21 01 90</strong>
+</h5>
+@* <hr /> *@
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="SaveContactFormMessage">
+
+            @if (ViewBag.ErrorMessage == null)
+            {
+                <p style="color: red">@ViewBag.ErrorMessage</p>
+            }
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Subject" class="control-label"></label>
+                <input asp-for="Subject" class="form-control" />
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Message" class="control-label"></label>
+                <input asp-for="Message" class="form-control" style="height: 250px;">
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+
+@*             <div class="form-group">
+                <label asp-for="CreatedAt" class="control-label"></label>
+                <input asp-for="CreatedAt" class="form-control" />
+                <span asp-validation-for="CreatedAt" class="text-danger"></span>
+            </div>
+ *@
+            <div class="form-group mt-5 mb-5">
+                <input type="submit" value="SEND MESSAGE " style="background-color:black" class="w-100 btn btn-lg btn-dark" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@* <div class="mt-5 mb-5">
+    <a asp-action="Index">Back to List</a>
+</div> *@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

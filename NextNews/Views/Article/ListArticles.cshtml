@@ -1,0 +1,172 @@
+﻿@model IEnumerable<NextNews.Models.Database.Article>
+@using NextNews.Services
+@inject ICategoryService _categoryService
+
+@{
+    ViewData["Title"] = "ListArticles";
+    Pager pager = ViewBag.Pager ?? new Pager(); // Initialize pager if null
+    int pageNo = pager.CurrentPage;
+}
+
+<h1>List of Articles</h1>
+<a asp-controller="Article" asp-action="CreateArticle" class="btn btn-dark btn-lg btn-block btn-custom py-3 px-4">Create Article</a>
+
+<div class="row" style="margin-top: 10px;">
+    @foreach (var item in Model)
+    {
+        <div class="col-4 p-4" style="border: 1px solid gray">
+            <a asp-action="Details" asp-route-id="@item.Id">
+                <img src="@item.ImageLink" alt="@item.LinkText" style="width: 100%" />
+            </a>
+            <h3>@item.LinkText</h3>
+            <p><i>@item.ContentSummary</i></p>
+            @{
+                var cat = _categoryService.GetCategoryById(item.CategoryId ?? 0);
+            }
+            <h6>Category Name: @cat?.Name</h6>
+            <h6>Author Name: @item.AuthorName</h6>
+            <h6>Release Date: @item.DateStamp</h6>
+            <br />
+            <a asp-action="Details" asp-controller="Article" asp-route-id="@item.Id" class="btn btn-outline-info">Read More</a>
+            <a asp-action="Edit" asp-controller="Article" asp-route-id="@item.Id" class="btn btn-outline-info">Edit</a>
+            <a asp-action="Delete" asp-controller="Article" asp-route-id="@item.Id" class="btn btn-outline-info">Delete</a>
+        </div>
+    }
+</div>
+
+<!-- Pagination -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        @if (ViewBag.HasPreviousPage != null && (bool)ViewBag.HasPreviousPage)
+        {
+            <li class="page-item">
+                <a class="page-link" href="?pg=@(pager.CurrentPage - 1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        }
+
+
+        @for (int i = 1; i <= pager.TotalPages; i++)
+        {
+            <li class="page-item @(i == pager.CurrentPage ? "active" : "")">
+                <a class="page-link" href="?pg=@i">@i</a>
+            </li>
+        }
+
+        @if (ViewBag.HasNextPage != null && (bool)ViewBag.HasNextPage)
+        {
+            <li class="page-item">
+                <a class="page-link" href="?pg=@(pager.CurrentPage - 1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        }
+
+    </ul>
+</nav>
+
+
+
+
+
+
+@* @model IEnumerable<NextNews.Models.Database.Article>
+
+@using NextNews.Services
+
+ @inject ICategoryService _categoryService; 
+
+
+
+@{
+    ViewData["Title"] = "ListArticles";
+    Pager pager = new Pager();
+    int pageNo = 0;
+
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}
+
+
+
+<h1>List of Articles</h1>
+<a asp-controller="Article" asp-action="CreateArticle" class="btn btn-dark btn-lg btn-block btn-custom py-3 px-4">Create Article</a>
+
+<div class="row" style="margin-top: 10px;">
+ *@
+    @*   ****  LOOP WITH LIST OF ARTICLES   ****   *@
+   
+
+   @*  @foreach (var item in Model)
+    {
+  
+        <div class="col-4 p-4" style="border:1px solid gray"> *@
+
+            @*  <img src="@item.ImageLink" style="width: 100%"  /> *@
+           @*  <br />
+            <a asp-action="Details"  asp-route-id="@item.Id" >
+                <img src="@item.ImageLink" @item.LinkText style="width: 100%" />
+            </a>
+
+            <h3>@item.LinkText</h3>
+            <p><i>@item.ContentSummary</i></p> *@
+
+           @*  @{
+                var cat = _categoryService.GetCategoryById(item.CategoryId ?? 0);
+            }
+
+
+            <h6>Category Name :  @cat?.Name</h6>
+            <h6> Author Name :  @item.AuthorName </h6>
+            <h6> Release Date :   @item.DateStamp</h6>
+
+            <br />
+
+
+            <a asp-action="Details" asp-controller="Article" asp-route-id="@item.Id" class="btn btn-outline-info" style="wavy">Read More </a>
+            <a asp-action="Edit" asp-controller="Article" asp-route-id="@item.Id" class="btn btn-outline-info" style="wavy">Edit</a>
+            <a asp-action="Delete" asp-controller="Article" asp-route-id="@item.Id" class="btn btn-outline-info" style="wavy">Delete</a>
+
+        </div>
+    } *@
+  @*  </ul> *@
+@* </div>
+
+
+      <br/> *@
+ @*  <partial name="_PagginationPartialView" model="@ViewBag.Pager"></partial> *@
+
+
+@*  <partial name="_PagginationPartialView" model="@pager"></partial> *@
+
+@* <Partial name="_ParViewArticleList" model="Model"></Partial>  *@
+
+
+@* <div>
+    @foreach (var article in Model)
+    {
+        <div class="row mt-4">
+            <!-- Image Column -->
+            <div class="col-md-4">
+                <img class="img-on-HomeIndex img-fluid" src="@article.ImageLink" alt="@article.HeadLine">
+            </div>
+            <!-- Summary and Date Column -->
+            <div class="col-md-8">
+                <div class="latest-news-headline">
+                    <a asp-action="Details" asp-controller="Article" asp-route-id="@article.Id" class="latest-news-link">
+                        @article.HeadLine
+                    </a>
+                </div>
+                <p class="latest-news-summary">@article.ContentSummary</p>
+                <p class="latest-news-date">Published on @article.DateStamp?.ToString("M") @article.DateStamp?.ToString("t")</p>
+            </div>
+        </div>
+        <hr class="hr-search" width="100%" size="3">
+    }
+
+</div>
+ *@

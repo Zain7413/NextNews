@@ -1,0 +1,19 @@
+﻿ @model NextNews.Models.Wheather
+
+
+
+
+<div>
+        <img src="@Model.icon.url" alt="Weather Icon" />
+        <p>City: @Model.City</p>
+        <p>Summary: @Model.Summary</p>
+        <p>Temperature (Celsius): @Model.TemperatureCelsius</p>
+        <p>Temperature (Fahrenheit): @Model.TemperatureFahrenheit</p>
+        <p>Humidity: @Model.humidity</p>
+        <p>Wind Speed: @Model.windSpeed</p>
+        <p>Date: @Model.date</p>
+        <p>Unix Time: @Model.unixTime</p>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+

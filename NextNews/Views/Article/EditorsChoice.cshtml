@@ -1,0 +1,149 @@
+﻿@model IEnumerable<NextNews.Models.Database.Article>
+
+@{
+    ViewData["Title"] = "Editor's Choice ";
+
+}
+
+<h1>Editor's Choice</h1>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+            td a {
+                color: #007bff;
+                text-decoration: none;
+            }
+
+                td a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+</head>
+
+
+<body>
+    <header>
+        <h1>@ViewData["Title"]</h1>
+    </header>
+
+
+
+
+
+
+
+
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>ArticleId</th>
+                <th>Headline</th>
+                <th>Content Summary</th>
+                <th>DateStamp</th>
+                <th>CategoryId</th>
+                <th>Editors Choice</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in Model)
+            {
+                <tr>
+                    <td>@article.Id</td>
+                    <td>@article.HeadLine</td>
+                    <td>@article.ContentSummary</td>
+                    <td>@article.DateStamp</td>
+                    <td>@article.CategoryId</td>
+                    <td>
+                        @if (article.IsEditorsChoice == true)
+                        {
+                            <a asp-action="SaveEditorsChoice" asp-controller="Article" asp-route-addOrRemove="remove" asp-route-articleId="@article.Id">
+                                <img src="~/images/checkbox-checked.jpg" style="height: 25px"/>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-action="SaveEditorsChoice" asp-controller="Article" asp-route-addOrRemove="add" asp-route-articleId="@article.Id">
+                                <img src="~/images/checkbox-empty.jpg" style="height: 25px" />
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

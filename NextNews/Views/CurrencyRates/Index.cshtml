@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Currency Exchange Rates with Flags</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <style>
+        /* Some basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* .container {
+            max-width:auto;
+           /*  margin: 20px auto; */
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+           /*  box-shadow: 0 2px 5px rgba(0,0,0,0.1); */ */
+        }
+
+        table {
+            max-width: auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .flag-icon {
+            width: 25px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Currency Exchange Rates</h1>
+        <table id="exchange-table">
+            <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>Currency</th>
+                    <th>Rate (SEK)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Exchange rates will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Function to fetch exchange rates from ExchangeRatesAPI
+        async function fetchExchangeRates() {
+            try {
+                const response = await fetch('https://api.exchangerate-api.com/v4/latest/SEK');
+                const data = await response.json();
+                return data.rates;
+            } catch (error) {
+                console.error('Error fetching exchange rates:', error);
+            }
+        }
+
+        // Function to render exchange rates in table
+        async function renderExchangeRates() {
+            const rates = await fetchExchangeRates();
+            const tableBody = document.querySelector('#exchange-table tbody');
+            tableBody.innerHTML = '';
+            for (const currency in rates) {
+                const rate = rates[currency];
+                const country = currency.substring(0, 2).toLowerCase();
+                const row = `<tr>
+                            <td><span class="flag-icon flag-icon-${country}"></span>${currency}</td>
+                            <td>${currency}</td>
+                            <td>${rate.toFixed(2)}</td>
+                          </tr>`;
+                tableBody.insertAdjacentHTML('beforeend', row);
+            }
+        }
+
+        // Call the renderExchangeRates function initially
+        renderExchangeRates();
+
+        // Refresh exchange rates every 10 seconds
+        setInterval(renderExchangeRates, 10000);
+    </script>
+</body>
+</html>

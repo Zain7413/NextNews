@@ -1,0 +1,195 @@
+
+@using NextNews.ViewComponents
+
+
+
+<nav class="navbar navbar-light bg-white">
+
+    
+   
+     @* <div class="container d-flex justify-content-between align-items-center"> *@
+      
+       @*   <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+
+            <img src="~/images/NEXT.gif" style="width:30%; padding-left:30px;" />
+
+        </a> *@
+<div class="container">
+  <div class="row">
+   <div class="col">
+
+       @await Component.InvokeAsync(typeof(WheatherApiViewComponent), new { chosenCity = "Link�ping" })
+       
+      <a href="/Home/AboutUs" class="is-active"data-drupal-link-system-path="node/36">About Us</a>
+     &nbsp;
+    
+     <a href="/Contact" data-drupal-link-system-path="contact" class="is-active">Contact Us</a>
+     &nbsp;
+    
+     <a asp-action="Create" asp-controller="NewsLetter" name=""rele="" style="target" accesskey="" data-drupal-link-system-path="newsletter" class="is-active">Newsletter</a>
+       &nbsp;
+     <a href="CurrencyRates" class="is-active"data-drupal-link-system-path="node/36">Currency Rates</a>
+     
+
+ </div>
+    
+   
+  </div>
+  <div class="row">
+    <div class="col-5">
+      <span id="datetime"></span>
+    <script>
+      // create a function to update the date and time
+      function updateDateTime() {
+        // create a new `Date` object
+        const now = new Date();
+
+        // get the current date and time as a string
+        const currentDateTime = now.toLocaleString();
+
+        // update the `textContent` property of the `span` element with the `id` of `datetime`
+        document.querySelector('#datetime').textContent = currentDateTime;
+      }
+
+      // call the `updateDateTime` function every second
+      setInterval(updateDateTime, 1000);
+    </script>
+    </div>
+    <div class="col-7">
+      <form class="d-flex" asp-controller="Categories" asp-action="Search">
+                <input name="searchString" class="form-control" type="search" placeholder="Search On NEXTnews" aria-label="Search">
+                <button class="btn btn-outline-danger" type="submit">Search</button>
+            </form>
+    </div>
+  </div>
+</div>
+</nav>
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <div class="container">
+       
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+         
+            <img src="~/images/nextnews.img/nextnews (5).jpg" style="width:12%;"/>
+            </a>
+            
+           
+                 
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+               
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" style="color:black; font-weight:bold" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'" asp-controller="Home" asp-action="Index">Home
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown" href="#" style="color:black; font-weight:bold" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'">
+                        Local
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+
+
+                            @await Component.InvokeAsync("NavbarLocalArticles")
+                           
+
+                        </li>  
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown" href="#" style="color:black; font-weight:bold" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'">
+
+                        Sweden
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+
+
+                           @await Component.InvokeAsync("NavbarSwedenArticles")
+
+
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown" href="#" style="color:black; font-weight:bold" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'">
+
+                        World
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            @await Component.InvokeAsync("NavbarWorldArticles")
+
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown" href="#" style="color:black; font-weight:bold" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'">
+
+                        Business
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            @await Component.InvokeAsync("NavbarBusinessArticles")
+
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown" href="#" style="color:black; font-weight:bold" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'">
+
+
+                        Sport
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            @await Component.InvokeAsync("NavbarSportArticles")
+
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown" href="#" style="color:black; font-weight:bold" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'">
+
+                        Entertainment
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            @await Component.InvokeAsync("NavbarEntertainmentArticles")
+
+                        </li>
+                    </ul>
+                </li>
+              
+                 <li class="nav-item">
+                    <a asp-action="GetStockDataView" asp-controller="Stock" class="nav-link" style="color:black; font-weight:bold"  role="button">
+
+                      Stock Markets
+                    </a>
+                   
+                </li>
+               
+                        
+            </ul>
+           
+
+                
+            <partial name="_loginPartial"> </partial/a>
+           
+
+           <div>
+                <a asp-controller="Article" asp-action="EditorDashboard" class="btn" style="background-color: black; color: white;">Dashboard</a>
+
+           </div>
+
+        </div>
+    </div>
+
+</nav>
+
+           @await Component.InvokeAsync("BusinessApi")
+     

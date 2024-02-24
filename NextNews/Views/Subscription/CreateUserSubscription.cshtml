@@ -1,0 +1,113 @@
+﻿
+@model NextNews.Models.Database.Subscription
+
+@{
+    ViewData["Title"] = "Create User Subscription";
+}
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Choose Your Subscription Plan</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="CreateUserSubscription">
+                        <div class="form-group mb-3">
+                            <label asp-for="SubscriptionTypeId">Subscription Type</label>
+                            <select asp-for="SubscriptionTypeId" class="form-control" id="subscriptionTypeSelect">
+                                <!-- Dynamically loaded options will go here -->
+
+                            </select>
+                            <small id="subscriptionHelp" class="form-text text-muted">Select a subscription plan that best fits your needs.</small>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label>Price</label>
+                            <input type="text" class="form-control" id="subscriptionPrice" readonly>
+                            <small class="form-text text-muted">Price is based on the selected subscription type.</small>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label>Subscription Details</label>
+                            <textarea class="form-control" id="subscriptionDetails" rows="3" readonly></textarea>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <input type="submit" value="Buy Now" class="btn btn-success" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+    $(document).ready(function() {
+        // Assume you have an endpoint or method to get subscription types
+            var subscriptionTypes = @Html.Raw(Json.Serialize(ViewBag.SubscriptionTypes)); // Adjust based on actual implementation
+        
+        // Populate subscription types
+        var select = $('#subscriptionTypeSelect');
+        subscriptionTypes.forEach(function(type) {
+            select.append($('<option>', {
+                value: type.id,
+                text: type.name + ' - $' + type.price
+            }));
+        });
+
+        // Update price and details on type change
+        $('#subscriptionTypeSelect').change(function() {
+            var selectedType = subscriptionTypes.find(type => type.id === parseInt($(this).val()));
+            $('#subscriptionPrice').val('$' + selectedType.price);
+            $('#subscriptionDetails').val(selectedType.description);
+        }).change(); // trigger change to set initial values
+    });
+    </script>
+}
+
+
+
+
+
+
+
+@* @model NextNews.Models.Database.Subscription
+
+@{
+    ViewData["Title"] = "CreateUserSubscription";
+}
+
+<h1>CreateUserSubscription</h1>
+
+<h4>UserSubscriptionVM</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateUserSubscription">
+          
+             <div class="form-group">
+            <label asp-for="SubscriptionTypeId">Subscription Type</label>
+            <select asp-for="SubscriptionTypeId" class="form-control">
+            <option value="1">Basic</option>
+            <option value="2">Premium</option>
+            </select>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Buy" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+ *@

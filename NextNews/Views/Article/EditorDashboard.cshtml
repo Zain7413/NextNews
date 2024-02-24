@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "Editor Dashboard";
+    // Layout = null;
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    div.container1 {
+        max-width: 1200px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        
+    }
+
+    ul.navbar1 {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        border-radius: 8px;
+    }
+
+    li {
+        float: left;
+    }
+
+        li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+        }
+
+            li a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+    
+</style>
+
+<div class="container container1">
+    <h1>Dashboard</h1>
+
+    <ul class="navbar navbar1">
+        <li class="py-3 px-4"><a href="/">Home</a></li>
+        <li class="py-3 px-4"><a asp-controller="Article" asp-action="CreateArticle">Create Article</a></li>
+        <li class="py-3 px-4"><a asp-controller="Categories" asp-action="Index">Categories List</a></li>
+        <li class ="py-3 px-4"><a asp-controller="Article" asp-action="ListArticles">List of Articles</a></li>
+        <li class="py-3 px-4"><a asp-controller="Subscription" asp-action="ListSubscription">Subscriptions List</a></li>
+        <li class="py-3 px-4"><a asp-controller="Statistics" asp-action="Index">Statistics</a></li>
+        <li class="py-3 px-4"><a asp-controller="Admin" asp-action="Dashboard">Admin Pages</a></li>
+    </ul>
+</div>
+
+
+
+@* 
+<div>
+
+    <div>
+        @await Html.PartialAsync("_RoleBasedPartial")
+    </div>
+
+</div> *@

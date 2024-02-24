@@ -1,0 +1,95 @@
+﻿@model NextNews.Models.Database.Subscription
+
+@{
+    ViewData["Title"] = "Subscription Details";
+    var isBasicPlan = Model.SubscriptionTypeId == 1;
+    var isPremiumPlan = Model.SubscriptionTypeId == 2;
+}
+
+<style>
+    .details-container {
+        max-width: 600px;
+        margin: auto;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .details-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .details-body {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .detail-row {
+        margin-bottom: 10px;
+    }
+
+    .detail-title {
+        font-weight: bold;
+    }
+
+    .action-buttons {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .action-button {
+        margin: 5px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .edit-button {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+        .edit-button:hover {
+            background-color: #45a049;
+        }
+
+    .list-button {
+        background-color: #008CBA;
+        color: white;
+    }
+
+        .list-button:hover {
+            background-color: #007bb5;
+        }
+</style>
+
+<div class="details-container">
+    <div class="details-header">
+        <h1>Subscription Details</h1>
+    </div>
+    <div class="details-body">
+        <div class="detail-row"><span class="detail-title">Price:</span> @Model.Price.ToString()</div>
+        <div class="detail-row"><span class="detail-title">Created:</span> @Model.Created.ToString()</div>
+        <div class="detail-row"><span class="detail-title">Expires:</span> @Model.Expired?.ToString("d")</div>
+        <div class="detail-row"><span class="detail-title">Payment Complete:</span> @Model.PaymentComplete.ToString()</div>
+        <div class="detail-row"><span class="detail-title">Active:</span> @Model.IsActive.ToString()</div>
+        @* <div class="detail-row"><span class="detail-title">Subscription Type:</span> @Model.SubscriptionType.Name</div> *@
+    </div>
+    <div class="action-buttons">
+        @if (Model.IsActive)
+        {
+            if (isBasicPlan)
+            {
+                <button onclick="location.href='@Url.Action("ChangeSubscription", new { newSubscriptionTypeId = 2 })'" class="action-button edit-button">Upgrade to Premium</button>
+            }
+            else if (isPremiumPlan)
+            {
+                <button onclick="location.href='@Url.Action("ChangeSubscription", new { newSubscriptionTypeId = 1 })'" class="action-button edit-button">Downgrade to Basic</button>
+            }
+        }
+     
+    </div>
+</div>

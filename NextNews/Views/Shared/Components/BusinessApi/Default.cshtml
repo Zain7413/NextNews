@@ -1,0 +1,39 @@
+﻿@model NextNews.Models.Database.Stock
+
+
+<div class="stock-ticker">
+    <div class="ticker-wrap">
+        <div class="ticker">
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div>@Model.ErrorMessage</div>
+            }
+            else if (Model.top10 == null || !Model.top10.Any())
+            {
+                <div>No data is available</div>
+            }
+            else
+            {
+                @foreach (var item in Model.top10)
+                {
+                    
+
+
+                    <div class="ticker__item" data-name="@item.name" data-symbol="@item.symbol">
+                      
+                        <span class="corner-indicator @(item.percentChange >= 0 ? "positive" : "negative")"></span>
+                        <span class="stock-name"><strong>@item.name</strong></span>
+                        <span class="stock-change @(item.percentChange >= 0 ? "positive" : "negative")">
+                            @(item.percentChange >= 0 ? "+" : "")@item.percentChange.ToString("F2") %
+                        </span>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+

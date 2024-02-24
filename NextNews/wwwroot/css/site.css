@@ -1,0 +1,424 @@
+
+html {
+    font-size: 14px;
+}
+
+@media screen and (max-width: 600px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.two-column {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .two-column > div {
+        flex: 1;
+        margin-right: 300px; /* Adjust the right margin to control the space between columns */
+    }
+
+    .two-column p {
+        margin-bottom: 200px; /* Add space below paragraphs for better readability */
+    }
+
+.column-break {
+    flex-basis: 200px; /* Adjust the space between columns */
+}
+
+
+.btn btn-dropdown {
+    background-color: white;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    transition-delay: 10s;
+}
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    transition-delay: 10s;
+}
+
+.nav-item:hover {
+    color: red;
+}
+
+
+.dropdown-menu a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: wavy;
+    display: block;
+    padding: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    transition-delay: 10s;
+}
+
+    .dropdown-menu a:hover {
+        background-color: #3b3f42;
+        text-decoration: underline;
+        color: red;
+        transition-delay: 10s;
+    }
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    transition-delay: 10s;
+}
+
+.dropdown:hover .btn btn-dropdown {
+    background-color: white;
+    transition-delay: 10s;
+}
+
+
+@media (min-width: 768px) {
+    .dropdown-menu {
+        padding-top: 45px;
+        display: none;
+        position: absolute;
+        background-color: #3b3f42;
+        min-width: 800px;
+        min-height: 400px;
+        color: white !important;
+    }
+}
+
+.dropdown-menu .dropdown-item {
+    font-weight: bold;
+    font-size: 16px; /* Adjust the font size as needed */
+}
+
+/* Apply styles to the main dropdown links */
+.nav-item.dropdown .nav-link.dropdown {
+    color: black;
+    font-weight: bold;
+    transition-delay: 20s;
+}
+
+
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+column {
+    display: inline-block;
+}
+
+.picture {
+    width: 200px;
+    height: 100px;
+}
+
+.col-6 {
+    border-spacing: 1px;
+}
+
+.picture-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-right: 20px;
+    padding-right: 30px;
+}
+
+.picture-container {
+    width: 35%;
+    margin-bottom: 30px;
+    position: relative;
+    padding-top: 40px;
+    margin-right: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.picture:hover {
+    box-shadow: 0 0 5px 5px rgba(255, 0, 0, 0.5);
+}
+
+.picture {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.text-container {
+    width: 70%;
+    background-color: #3b3f42;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+}
+
+    .text-container:hover {
+        text-decoration: underline;
+        color: red;
+    }
+
+.publish-date {
+    color: white;
+    background-color: #3b3f42;
+    text-decoration: none;
+    font-size: 10px;
+}
+
+
+/* Image on Home Index */
+.img-on-HomeIndex {
+    margin: 0px;
+    border-radius: 10px;
+    margin-top: 10px;
+    transition: border-color 0.3s ease; /* Smooth transition for border color change */
+}
+
+    /* CSS class for red border background */
+    .img-on-HomeIndex:hover {
+        border: 2px solid red;
+        background-color: rgba(255, 0, 0, 0.2); /* Semi-transparent red background */
+    }
+
+.article-imageLink {
+    width: 250px; /* Set a fixed width */
+    height: 190px; /* Set a fixed height */
+    overflow: hidden;
+    border-radius: 10px; /* Maintain curved corners */
+}
+
+    .article-imageLink img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensure the entire image is visible while maintaining aspect ratio */
+    }
+
+/* Add this to your CSS file or in a <style> tag in the head of your HTML */
+.paragraph-spacing {
+    margin-bottom: 20px; /* Adjust the margin to control the spacing */
+    padding-left: 10px;
+}
+
+
+/* Breaking News, Top story, Latest News, Popular News */
+.news-carousel {
+    width: 80%;
+    margin: 0 auto;
+}
+
+#newsCarousel {
+    padding-top: 10px; /* Adjust this value as needed */
+    padding-right: 40px;
+    padding-bottom: 40px;
+    padding-left: 40px;
+}
+
+.latest-news-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.latest-news-title {
+    text-align: center;
+}
+
+.latest-news-headline {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.2; /* Adjust this value as needed */
+}
+
+.latest-news-summary {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.latest-news-date {
+    font-size: 12px;
+    color: #999;
+}
+
+.latest-news-link {
+    color: var(--bs-body-color);
+    text-decoration: none;
+    transition: color 0.15s ease-in-out;
+}
+
+/*Top Story*/
+/* TOP Story label on left corner of the image */
+.article-container {
+    position: relative;
+    width: 100%;
+    max-width: 700px; /* Adjust as needed */
+    margin: 0 auto;
+}
+
+.article-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10px; /* Adjust as needed */
+    box-sizing: border-box;
+}
+
+.top-story-label {
+    background-color: rgba(255, 255, 255, 0.7); /* Faint white background */
+    padding: 5px; /* Adjust as needed */
+    color: #333; /* Text color */
+    font-weight: bold;
+}
+
+
+/* Advertisement Column */
+.advertisement-column {
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    text-align: center; /* Center the content horizontally */
+    padding: 10px; /* Add padding to the column */
+}
+
+    .advertisement-column p {
+        margin: 0;
+        font-weight: bold;
+    }
+
+.advertisement-item {
+    margin-bottom: 10px; /* Add margin between advertisement items */
+}
+
+
+/* Weather Column */
+.weather-column {
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    text-align: center; /* Center the content horizontally */
+    padding: 10px; /* Add padding to the column */
+}
+
+    .weather-column p {
+        margin: 0;
+        font-weight: bold;
+    }
+
+.weather-item {
+    margin-bottom: 10px; /* Add margin between advertisement items */
+}
+
+/*Weather Icon*/
+.ql-size-large {
+    font-size: 1.5em;
+}
+
+
+/* Stock Ticker*/
+.stock-ticker {
+    overflow: hidden;
+    background-color: #f0f0f0; /* Gray background for the ticker area */
+}
+
+.ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    padding-top: 20px;
+    padding-bottom: 5px;
+    /* Increase top and bottom padding */
+}
+
+.ticker {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+}
+
+
+@keyframes ticker {
+    0% {
+        transform: translate3d(100%, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+.ticker__item {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 15px;
+    margin: 0 10px; /* Keeps space between items */
+    position: relative;
+    background-color: #f0f0f0; /* Gray background for individual tabs */
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+.corner-indicator {
+    width: 10px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-top-left-radius: 4px; /* Match the border radius */
+    border-bottom-left-radius: 4px; /* Match the border radius */
+}
+
+    .corner-indicator.positive {
+        background-color: #4CAF50; /* Green */
+    }
+
+    .corner-indicator.negative {
+        background-color: #F44336; /* Red */
+    }
+
+.stock-name {
+    margin-left: 15px; /* Make space for the corner indicator */
+}
+
+.stock-change.positive {
+    color: #4CAF50; /* Green text */
+}
+
+.stock-change.negative {
+    color: #F44336; /* Red text */
+}
+
+/* Hover effect */
+.ticker-wrap:hover .ticker {
+    animation-play-state: paused;
+}

@@ -1,0 +1,100 @@
+﻿@model List<NextNews.Models.Database.User>
+
+
+@{
+    ViewData["Title"] = "ManageUsers";
+}
+
+
+<head>
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding:0;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0px;
+            background-color: white;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 2px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <header>
+        <h1>@ViewData["Title"]</h1>
+    </header>
+
+    <table >
+        <thead >
+            <tr>
+               
+                <th>UserName</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>DateOfBirth</th>
+                <th>Email</th>
+                <th>PhoneNumber</th>
+                <th>Action</th>
+            </tr>
+          
+        </thead>
+
+
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+            
+                    <td>@user.UserName</td>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.DateofBirth</td>
+                    <td>@user.Email</td>
+                    <td>@user.PhoneNumber</td>
+
+                    <td>
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+                    </td>
+                    <td> <a class="btn btn-danger" asp-action="DeleteUser" asp-route-id="@user.Id">Delete</a>  </td>
+                    <td>
+                        <a class="btn btn-info" asp-action="Details" asp-route-id="@user.Id">Details</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+
+
+    </table>
+</body>

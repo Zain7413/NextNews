@@ -1,0 +1,73 @@
+﻿@model NextNews.ViewModels.StatisticsViewModel
+
+@{
+    ViewData["Title"] = "Statistics";
+}
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<div class="container mt-5">
+    <h2 class="text-center">@ViewData["Title"]</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                
+                    <ul class="list-group">
+                        <li class="list-group-item">Total Users: @Model.UserCount</li>
+                        <li class="list-group-item">Total Articles: @Model.ArticleCount</li>
+                        <li class="list-group-item">Basic Subscription Users: @Model.BasicSubscriptionUsersCount</li>
+                        <li class="list-group-item">PremiumSubscription Users: @Model.PremiumSubscriptionUsersCount</li>
+                    </ul>
+
+                   
+                    <canvas id="myChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Adding a script to initialize and render the chart -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the canvas element
+        var ctx = document.getElementById('myChart').getContext('2d');
+
+        // Create a bar chart
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Users', 'Articles', 'Basic Subscription Users', 'Premium Subscription Users'],
+                datasets: [{
+                    label: 'Count',
+                    data: [@Model.UserCount, @Model.ArticleCount, @Model.BasicSubscriptionUsersCount, @Model.PremiumSubscriptionUsersCount],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 206, 86, 0.2)', // Added color for Basic Subscription Users
+                        'rgba(255, 159, 64, 0.2)', // Added color for Premium Subscription Users
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)', // Added color for Basic Subscription Users
+                        'rgba(255, 159, 64, 1)', // Added color for Premium Subscription Users
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>

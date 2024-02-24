@@ -1,0 +1,128 @@
+﻿@model NextNews.ViewModels.ArticleDetailsViewModel
+
+@using Microsoft.AspNetCore.Identity
+@using NextNews.Models.Database
+@using NextNews.Services
+
+
+
+@inject UserManager<User> _userManager
+@inject IArticleService _articleService
+@inject IUserService _userService
+
+@{
+    ViewData["Title"] = "Details";
+
+    // Hide text for not Premium subscribers
+    bool premiumSubscription = false;
+    string subscrType = ViewBag.SubscriptionTypeOfUser;
+
+    if (subscrType == "PremiumUser")
+    {
+        premiumSubscription = true;
+    }
+
+}
+
+
+
+<h1>@Model.Article.HeadLine</h1>
+<i>
+    @Model.Article.DateStamp   <br />
+    @Model.Article.AuthorName
+</i>
+
+<div class="row">
+    <div class="col-sm-9" style="padding:3px;">
+       
+        <br />
+        <img src="@Model.Article.ImageLink" style="width:100%;" />   <br />  <br /> 
+        <strong>@Model.Article.ContentSummary</strong>  <br /> <br />
+        
+        
+         @if(premiumSubscription)
+        {
+            <div>@Html.Raw(Model.Article.Content)</div>
+        }
+        else
+        {
+            <h5 style="color:red"><i>You need a premium account for reading this!</i></h5>
+        }
+      
+
+    </div>
+
+
+
+
+    <div class="col-3" style="border:6px;" padding:"3px" >
+
+        <h2 style="color: black">Latest News</h2>
+        @foreach (var news in Model.LatestArticles)
+        {
+            <div>
+
+                <div class="article-imageLink">
+                    <img class="img-on-HomeIndex" src="@news.ImageLink" alt="Article ImageLink" style="width:100%">
+                </div>
+
+                <div class="latest-news-headline">
+                    <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link">
+                        @news.HeadLine
+                    </a>
+                </div>
+
+                <div class="latest-news-item mb-4">
+                </div>
+                <p class="latest-news-summary">@news.ContentSummary</p>
+                <p class="latest-news-date">Published on @news.DateStamp?.ToString("M") @news.DateStamp?.ToString("t")</p>
+            </div>
+
+        }
+    </div>
+
+</div>
+
+
+<div>
+    
+
+    <a class="btn btn-success" id="likeButton" data-id="@Model.Article.Id" asp-action="Likes" asp-controller="Article" >Like</a>
+    
+</div>
+
+
+
+
+
+<script>
+    var isLiked = false; // Initialize the flag
+
+    var likeButton = document.getElementById('likeButton');
+    likeButton.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+        var articleId = this.getAttribute('data-id'); // Get article ID
+
+        fetch('/Article/Likes?id=' + articleId,
+            {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                likeButton.innerHTML = isLiked ? 'Like' : 'Unlike';
+                isLiked = !isLiked;
+            })
+            .catch(error => console.error('Error:', error));
+
+        // if (isLiked) {
+        //     likeButton.innerHTML = 'Like';
+        //     // Additional logic for when the article is unliked
+        // } else {
+        //     likeButton.innerHTML = 'Unlike';
+        //     // Additional logic for when the article is liked
+        // }
+
+        // isLiked = !isLiked; // Toggle the flag
+    });
+</script>
+

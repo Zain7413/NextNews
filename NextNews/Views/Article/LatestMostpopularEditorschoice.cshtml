@@ -1,0 +1,38 @@
+﻿@model List<NextNews.Models.Database.Article>
+
+
+@* @{
+    ViewData["Title"] = "LatestMostpopularEditorschoiceView";
+}
+ *@
+
+
+<h2 class="mt-4">@ViewBag.Heading</h2>
+
+<div class="row">
+
+    @foreach (var news in Model)
+    {
+        @* <div class="col-3"> *@
+        <div class="col-6 col-md-3 mb-3">
+
+            <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link">
+                <div class="article-imageLink">
+                    <img class="img-on-HomeIndex" src="@news.ImageLink" alt="Article ImageLink" style="width:100%">
+                </div>
+                <div class="latest-news-headline">
+                    @*  <a asp-action="Details" asp-controller="Article" asp-route-id="@news.Id" class="latest-news-link"> *@
+                    @news.HeadLine
+                    @* </a> *@
+                </div>
+            </a>
+            <p class="latest-news-summary">@news.ContentSummary</p>
+            <p class="latest-news-date">Published on @news.DateStamp?.ToString("M") @news.DateStamp?.ToString("t")</p>
+        </div>
+    }
+</div>
+
+
+
+
+

@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    div.container1 {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        
+    }
+
+    ul.navbar1 {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        border-radius: 8px;
+    }
+    
+
+    li{
+        float: left;
+    }
+
+        li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+        }
+
+            li a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+
+</style>
+
+<div class="container container1">
+    <h1>Dashboard</h1>
+
+    <ul class="navbar navbar1" >
+        <li class="py-3 px-4"><a href="/">Home</a></li>
+        <li class="py-3 px-4"><a asp-controller="Admin" asp-action="Index">Statistics</a></li>
+        <li class="py-3 px-4"><a asp-controller="User" asp-action="ManageUsers">Manage Users</a></li>
+        <li class="py-3 px-4"><a asp-controller="Role" asp-action="Index">List of Roles</a></li>
+    </ul>
+</div>
+
+@* @{
+    ViewData["Title"] = "Dashboard";
+}
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container">
+    <h1 class="text-center">Dashboard</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="btn-group d-flex" role="group" aria-label="Dashboard Buttons">
+                <a href="/" class="btn btn-dark btn-lg btn-block">Home</a>
+                <a asp-controller="Admin" asp-action="Index" class="btn btn-dark btn-lg btn-block">Statistics</a>
+                <a asp-controller="User" asp-action="ManageUsers" class="btn btn-dark btn-lg btn-block">Manage Users</a>
+                <a asp-controller="Role" asp-action="Index" class="btn btn-dark btn-lg btn-block">List of Roles</a>
+            </div>
+        </div>
+    </div>
+</div> *@
+
+
+
